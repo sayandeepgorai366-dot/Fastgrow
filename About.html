@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastGrow - About Us</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root { --bg-main: #030712; --bg-nav: rgba(3, 7, 18, 0.8); --bg-footer: #02040a; --text-main: #ffffff; --text-muted: #9ca3af; --border-subtle: rgba(255, 255, 255, 0.1); --sky-blue: #0ea5e9; }
+        .light-mode { --bg-main: #f8fafc; --bg-nav: rgba(248, 250, 252, 0.8); --bg-footer: #e2e8f0; --text-main: #0f172a; --text-muted: #475569; --border-subtle: rgba(0, 0, 0, 0.1); }
+        
+        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: var(--bg-main); color: var(--text-main); transition: 0.5s; }
+        
+        .navbar { display: flex; justify-content: space-between; padding: 20px 30px; background: var(--bg-nav); border-bottom: 1px solid var(--border-subtle); }
+        .logo { font-family: 'Fredoka', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-decoration: none; }
+        
+        .content-box { max-width: 800px; margin: 50px auto; padding: 40px 20px; line-height: 1.8; }
+        .content-box h1 { font-family: 'Fredoka', sans-serif; font-size: 3rem; color: var(--sky-blue); margin-bottom: 20px; }
+        .content-box h2 { color: var(--text-main); margin-top: 30px; }
+        .content-box p { color: var(--text-muted); font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">FastGrow</a>
+        <a href="index.html" style="color: var(--text-main); text-decoration: none;">Back to Home</a>
+    </nav>
+
+    <div class="content-box">
+        <h1>About FastGrow</h1>
+        <p>Welcome to FastGrow, your ultimate destination for Premium Digital Architecture. We specialize in designing and developing modern, ultra-fast, and high-converting websites for retail businesses and creators.</p>
+        
+        <h2>Our Mission 🚀</h2>
+        <p>Our mission is to empower local businesses and creators by giving them a digital storefront that not only looks like a multi-million dollar corporation but also drives real revenue and customer loyalty.</p>
+        
+        <h2>Why Choose Us? 💎</h2>
+        <p>We don't just build websites; we build digital experiences. With a focus on seamless UI/UX, direct-to-WhatsApp ordering systems, and market-dominating designs, FastGrow is the partner you need to scale fast.</p>
+    </div>
+
+    <script>
+        if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); }
+    </script>
+</body>
+</html>
