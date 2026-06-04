@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastGrow - Terms & Conditions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --bg-main: #030712; --bg-nav: rgba(3, 7, 18, 0.8); --text-main: #ffffff; --text-muted: #9ca3af; --border-subtle: rgba(255, 255, 255, 0.1); --sky-blue: #0ea5e9; }
+        .light-mode { --bg-main: #f8fafc; --bg-nav: rgba(248, 250, 252, 0.8); --text-main: #0f172a; --text-muted: #475569; --border-subtle: rgba(0, 0, 0, 0.1); }
+        
+        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: var(--bg-main); color: var(--text-main); transition: 0.5s; }
+        .navbar { display: flex; justify-content: space-between; padding: 20px 30px; background: var(--bg-nav); border-bottom: 1px solid var(--border-subtle); }
+        .logo { font-family: 'Fredoka', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-decoration: none; }
+        
+        .content-box { max-width: 800px; margin: 50px auto; padding: 40px 20px; line-height: 1.8; }
+        .content-box h1 { font-family: 'Fredoka', sans-serif; font-size: 3rem; color: var(--sky-blue); margin-bottom: 20px; }
+        .content-box h2 { color: var(--text-main); margin-top: 30px; }
+        .content-box p { color: var(--text-muted); font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">FastGrow</a>
+        <a href="index.html" style="color: var(--text-main); text-decoration: none;">Back to Home</a>
+    </nav>
+
+    <div class="content-box">
+        <h1>Terms & Conditions</h1>
+        <p>By accessing or using FastGrow's services, you agree to be bound by these Terms and Conditions.</p>
+        
+        <h2>1. Service Agreement</h2>
+        <p>FastGrow provides custom web development and design solutions. All project timelines, deliverables, and costs will be agreed upon before project commencement.</p>
+        
+        <h2>2. User Accounts</h2>
+        <p>If you create an account or log in using our email OTP system, you are responsible for maintaining the confidentiality of your login codes and account activities.</p>
+        
+        <h2>3. Intellectual Property</h2>
+        <p>All source code, designs, and digital architecture remain the intellectual property of FastGrow until full payment is completed by the client.</p>
+    </div>
+
+    <script>
+        if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); }
+    </script>
+</body>
+</html>

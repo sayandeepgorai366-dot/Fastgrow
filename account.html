@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FastGrow - Account</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#050505; --card:rgba(255,255,255,.05); --text:#fff; --muted:#9ca3af; --primary:#0A84FF; --border:rgba(255,255,255,.08);
+}
+.light{
+--bg:#f5f5f7;--card:rgba(255,255,255,.7);--text:#111;--muted:#666;--primary:#0A84FF;--border:rgba(0,0,0,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{background:var(--bg);color:var(--text);height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;transition:.4s;}
+.blob1,.blob2,.blob3{position:absolute;border-radius:50%;filter:blur(140px);z-index:-10;}
+.blob1{width:500px;height:500px;background:#0A84FF;top:-150px;left:-150px;opacity:.25;animation:float1 16s ease-in-out infinite;}
+.blob2{width:450px;height:450px;background:#7C3AED;top:40%;right:-120px;opacity:.20;animation:float2 18s ease-in-out infinite;}
+.blob3{width:400px;height:400px;background:#00C2FF;bottom:-120px;left:30%;opacity:.15;animation:float3 20s ease-in-out infinite;}
+@keyframes float1{0%{transform:translate(0,0);}50%{transform:translate(80px,80px);}100%{transform:translate(0,0);}}
+@keyframes float2{0%{transform:translate(0,0);}50%{transform:translate(-90px,-60px);}100%{transform:translate(0,0);}}
+@keyframes float3{0%{transform:translate(0,0);}50%{transform:translate(60px,-90px);}100%{transform:translate(0,0);}}
+
+.popup{width:350px;padding:40px;border-radius:25px;background:var(--card);backdrop-filter:blur(30px);border:1px solid var(--border);text-align:center;position:relative;z-index:20;}
+h2{margin-bottom:25px;font-weight:900;font-size:1.8rem;}
+p{margin-bottom:25px;}
+button{width:100%;padding:14px;margin-top:12px;border:none;border-radius:999px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer;transition:.3s;}
+button:hover{transform:translateY(-2px);}
+.theme-btn{position:absolute;top:20px;right:20px;padding:10px 16px;border:none;border-radius:999px;background:var(--card);cursor:pointer;color:var(--text);backdrop-filter:blur(20px);}
+</style>
+</head>
+<body>
+
+<div class="blob1"></div>
+<div class="blob2"></div>
+<div class="blob3"></div>
+
+<button class="theme-btn" id="themeToggle">🌙 Theme</button>
+
+<div class="popup">
+<h2>Account</h2>
+<p id="userEmail">Email: </p>
+<button id="logoutBtn">Logout</button>
+<button id="deleteBtn" style="background:#FF3B30;">Delete Account</button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signOut, deleteUser, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+// Firebase config
+const firebaseConfig = {
+apiKey: "AIzaSyB07ANyE0FOOmUrIMbKUE5xD6vEdriS2Jo",
+authDomain: "fastgrow-905b1.firebaseapp.com",
+projectId: "fastgrow-905b1",
+storageBucket: "fastgrow-905b1.firebasestorage.app",
+messagingSenderId: "544280124586",
+appId: "1:544280124586:web:a599118d32e1f9d043c4d3"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Theme toggle
+const themeBtn = document.getElementById("themeToggle");
+if(localStorage.getItem("theme")==="light"){document.body.classList.add("light");}
+themeBtn.addEventListener("click",()=>{
+document.body.classList.toggle("light");
+if(document.body.classList.contains("light")){localStorage.setItem("theme","light");}else{localStorage.setItem("theme","dark");}
+});
+
+// Display user email
+const userEmail = document.getElementById("userEmail");
+onAuthStateChanged(auth,user=>{
+    if(user){
+        userEmail.innerText = "Email: " + user.email;
+    } else {
+        // Redirect to login if no user
+        window.location.href="login.html";
+    }
+});
+
+// Logout button
+document.getElementById("logoutBtn").addEventListener("click",()=>{
+    signOut(auth).then(()=>{window.location.href="login.html";})
+    .catch(e=>alert(e.message));
+});
+
+// Delete account button
+document.getElementById("deleteBtn").addEventListener("click",()=>{
+    const user = auth.currentUser;
+    if(!user){alert("No user logged in"); return;}
+    if(confirm("Are you sure you want to delete your account? This action cannot be undone.")){
+        deleteUser(user).then(()=>{
+            alert("Account deleted");
+            window.location.href="signup.html";
+        }).catch(e=>{
+            alert("Error: "+e.message);
+        });
+    }
+});
+</script>
+
+</body>
+</html>

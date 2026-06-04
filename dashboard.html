@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FastGrow Dashboard V4</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+rel="stylesheet">
+
+<style>
+
+:root{
+
+--bg:#050505;
+--card:rgba(255,255,255,.05);
+--text:#ffffff;
+--muted:#9ca3af;
+--primary:#0A84FF;
+--secondary:#7C3AED;
+--border:rgba(255,255,255,.08);
+
+}
+
+.light{
+
+--bg:#f5f5f7;
+--card:rgba(255,255,255,.75);
+--text:#111111;
+--muted:#666666;
+--primary:#0A84FF;
+--secondary:#7C3AED;
+--border:rgba(0,0,0,.08);
+
+}
+
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+
+}
+
+html{
+
+scroll-behavior:smooth;
+
+}
+
+body{
+
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+transition:.4s;
+
+}
+
+/* BACKGROUND */
+
+.gradient-bg{
+
+position:fixed;
+inset:0;
+overflow:hidden;
+z-index:-10;
+
+}
+
+.blob{
+
+position:absolute;
+border-radius:50%;
+filter:blur(160px);
+
+}
+
+.blob1{
+
+width:600px;
+height:600px;
+
+background:#0A84FF;
+
+top:-200px;
+left:-200px;
+
+opacity:.22;
+
+animation:float1 18s ease-in-out infinite;
+
+}
+
+.blob2{
+
+width:500px;
+height:500px;
+
+background:#7C3AED;
+
+right:-150px;
+top:30%;
+
+opacity:.18;
+
+animation:float2 20s ease-in-out infinite;
+
+}
+
+.blob3{
+
+width:450px;
+height:450px;
+
+background:#00C2FF;
+
+left:30%;
+bottom:-150px;
+
+opacity:.15;
+
+animation:float3 22s ease-in-out infinite;
+
+}
+
+@keyframes float1{
+
+0%{transform:translate(0,0);}
+50%{transform:translate(90px,90px);}
+100%{transform:translate(0,0);}
+
+}
+
+@keyframes float2{
+
+0%{transform:translate(0,0);}
+50%{transform:translate(-100px,-70px);}
+100%{transform:translate(0,0);}
+
+}
+
+@keyframes float3{
+
+0%{transform:translate(0,0);}
+50%{transform:translate(80px,-100px);}
+100%{transform:translate(0,0);}
+
+}
+
+/* NAVBAR */
+
+.navbar{
+
+position:sticky;
+top:0;
+
+height:85px;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+padding:0 8%;
+
+background:rgba(0,0,0,.15);
+
+backdrop-filter:blur(30px);
+
+border-bottom:1px solid var(--border);
+
+z-index:1000;
+
+}
+
+.logo{
+
+font-size:1.5rem;
+font-weight:900;
+
+letter-spacing:-1px;
+
+}
+
+.logo span{
+
+background:linear-gradient(
+90deg,
+#0A84FF,
+#7C3AED
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+}
+
+.nav-right{
+
+display:flex;
+align-items:center;
+gap:15px;
+
+}
+
+.theme-btn{
+
+padding:12px 18px;
+
+border:none;
+cursor:pointer;
+
+border-radius:999px;
+
+background:var(--card);
+
+color:var(--text);
+
+backdrop-filter:blur(20px);
+
+}
+
+/* HERO */
+
+.container{
+
+width:min(1200px,90%);
+margin:auto;
+
+}
+
+.hero{
+
+min-height:92vh;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+text-align:center;
+
+}
+
+.hero-content{
+
+max-width:950px;
+
+}
+
+.hero-badge{
+
+display:inline-flex;
+
+padding:12px 20px;
+
+border-radius:999px;
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+backdrop-filter:blur(20px);
+
+margin-bottom:30px;
+
+font-size:.95rem;
+
+font-weight:600;
+
+}
+
+.hero h1{
+
+font-size:
+clamp(3rem,8vw,7rem);
+
+font-weight:900;
+
+line-height:1;
+
+letter-spacing:-4px;
+
+margin-bottom:30px;
+
+}
+
+.hero-gradient{
+
+background:
+linear-gradient(
+90deg,
+#0A84FF,
+#7C3AED
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+}
+
+.hero p{
+
+font-size:1.15rem;
+
+color:var(--muted);
+
+max-width:800px;
+
+margin:auto;
+
+line-height:1.9;
+
+}
+
+.hero-buttons{
+
+margin-top:45px;
+
+display:flex;
+justify-content:center;
+gap:20px;
+
+flex-wrap:wrap;
+
+}
+
+.btn{
+
+padding:17px 30px;
+
+border-radius:999px;
+
+text-decoration:none;
+
+font-weight:700;
+
+transition:.3s;
+
+}
+
+.btn-primary{
+
+background:#0A84FF;
+color:white;
+
+}
+
+.btn-primary:hover{
+
+transform:translateY(-4px);
+
+}
+
+.btn-secondary{
+
+background:var(--card);
+
+color:var(--text);
+
+border:1px solid var(--border);
+
+backdrop-filter:blur(20px);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="gradient-bg">
+
+<div class="blob blob1"></div>
+
+<div class="blob blob2"></div>
+
+<div class="blob blob3"></div>
+
+</div>
+
+<nav class="navbar">
+
+<div class="logo">
+Fast<span>Grow</span>
+</div>
+
+<div class="nav-right">
+
+<button
+id="themeToggle"
+class="theme-btn">
+
+🌙 Theme
+
+</button>
+
+</div>
+
+</nav>
+
+<!-- HERO -->
+
+<div class="container">
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="hero-badge">
+
+🚀 FastGrow Premium Dashboard V4
+
+</div>
+
+<h1>
+
+Welcome Back<br>
+
+<span class="hero-gradient">
+
+Creator
+
+</span>
+
+</h1>
+
+<p>
+
+Manage projects, approvals, clients, requests,
+and your entire FastGrow ecosystem from one
+beautiful Apple-inspired dashboard.
+
+</p>
+
+<div class="hero-buttons">
+
+<a href="project-request.html"
+class="btn btn-primary">
+
+Start New Project
+
+</a>
+
+<a href="#overview"
+class="btn btn-secondary">
+
+Open Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+<!-- DASHBOARD OVERVIEW -->
+
+<section id="overview" class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+
+Dashboard Overview
+
+</h2>
+
+<p class="section-subtitle">
+
+Track your growth and manage everything from one place.
+
+</p>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+
+<div class="stat-icon">
+🚀
+</div>
+
+<h3 class="counter" data-target="12">
+0
+</h3>
+
+<p>
+Projects Submitted
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+✅
+</div>
+
+<h3 class="counter" data-target="8">
+0
+</h3>
+
+<p>
+Projects Approved
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+🎯
+</div>
+
+<h3 class="counter" data-target="5">
+0
+</h3>
+
+<p>
+Projects Completed
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+💬
+</div>
+
+<h3 class="counter" data-target="24">
+0
+</h3>
+
+<p>
+Messages
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ACCOUNT CENTER -->
+
+<section class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+
+Account Center
+
+</h2>
+
+<p class="section-subtitle">
+
+Manage your profile and settings.
+
+</p>
+
+<div class="profile-card">
+
+<div class="avatar" id="avatar">
+
+SG
+
+</div>
+
+<h3 id="welcomeName">
+
+Welcome Back
+
+</h3>
+
+<p id="userEmail">
+
+Loading account...
+
+</p>
+
+<div class="profile-actions">
+
+<a href="account.html"
+class="profile-btn">
+
+Manage Account
+
+</a>
+
+<a href="project-request.html"
+class="profile-btn secondary">
+
+New Project
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<style>
+
+/* COMMON SECTION */
+
+.section{
+
+padding:100px 0;
+
+}
+
+.section-title{
+
+font-size:3rem;
+
+text-align:center;
+
+margin-bottom:15px;
+
+font-weight:900;
+
+letter-spacing:-2px;
+
+}
+
+.section-subtitle{
+
+text-align:center;
+
+color:var(--muted);
+
+max-width:700px;
+
+margin:auto auto 60px;
+
+line-height:1.8;
+
+}
+
+/* STATS */
+
+.stats-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:25px;
+
+}
+
+.stat-card{
+
+padding:35px;
+
+border-radius:30px;
+
+background:var(--card);
+
+backdrop-filter:blur(30px);
+
+border:1px solid var(--border);
+
+text-align:center;
+
+transition:.4s;
+
+}
+
+.stat-card:hover{
+
+transform:translateY(-12px);
+
+box-shadow:
+0 20px 50px
+rgba(10,132,255,.2);
+
+}
+
+.stat-icon{
+
+font-size:2rem;
+
+margin-bottom:15px;
+
+}
+
+.stat-card h3{
+
+font-size:3rem;
+
+color:#0A84FF;
+
+margin-bottom:10px;
+
+font-weight:800;
+
+}
+
+.stat-card p{
+
+color:var(--muted);
+
+font-size:1rem;
+
+}
+
+/* ACCOUNT CENTER */
+
+.profile-card{
+
+max-width:700px;
+
+margin:auto;
+
+padding:50px;
+
+border-radius:35px;
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+backdrop-filter:blur(30px);
+
+text-align:center;
+
+}
+
+.avatar{
+
+width:120px;
+height:120px;
+
+margin:auto;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+font-size:2rem;
+font-weight:900;
+
+background:
+linear-gradient(
+135deg,
+#0A84FF,
+#7C3AED
+);
+
+margin-bottom:25px;
+
+box-shadow:
+0 20px 40px
+rgba(10,132,255,.25);
+
+}
+
+.profile-card h3{
+
+font-size:2rem;
+
+margin-bottom:10px;
+
+}
+
+.profile-card p{
+
+color:var(--muted);
+
+margin-bottom:30px;
+
+}
+
+.profile-actions{
+
+display:flex;
+
+justify-content:center;
+
+gap:15px;
+
+flex-wrap:wrap;
+
+}
+
+.profile-btn{
+
+padding:15px 28px;
+
+border-radius:999px;
+
+background:#0A84FF;
+
+color:white;
+
+text-decoration:none;
+
+font-weight:700;
+
+transition:.3s;
+
+}
+
+.profile-btn:hover{
+
+transform:translateY(-4px);
+
+}
+
+.profile-btn.secondary{
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+color:var(--text);
+
+}
+
+</style>
+<!-- QUICK ACTIONS -->
+
+<section class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+
+Quick Actions
+
+</h2>
+
+<p class="section-subtitle">
+
+Access important tools instantly.
+
+</p>
+
+<div class="action-grid">
+
+<a href="project-request.html" class="action-card">
+
+<div class="action-icon">
+🚀
+</div>
+
+<h3>
+Start Project
+</h3>
+
+<p>
+Submit a brand new project request.
+</p>
+
+</a>
+
+<div class="action-card">
+
+<div class="action-icon">
+📂
+</div>
+
+<h3>
+My Projects
+</h3>
+
+<p>
+View all current and completed projects.
+</p>
+
+</div>
+
+<div class="action-card">
+
+<div class="action-icon">
+💬
+</div>
+
+<h3>
+Messages
+</h3>
+
+<p>
+Communicate directly with FastGrow.
+</p>
+
+</div>
+
+<a href="account.html" class="action-card">
+
+<div class="action-icon">
+⚙️
+</div>
+
+<h3>
+Account Settings
+</h3>
+
+<p>
+Manage account, logout and security.
+</p>
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ACTIVITY TIMELINE -->
+
+<section class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+
+Recent Activity
+
+</h2>
+
+<p class="section-subtitle">
+
+Track every important event.
+
+</p>
+
+<div class="timeline">
+
+<div class="timeline-item">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-content">
+
+<h3>
+Account Created
+</h3>
+
+<p>
+Your FastGrow account was successfully created.
+</p>
+
+</div>
+
+</div>
+
+<div class="timeline-item">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-content">
+
+<h3>
+Dashboard Accessed
+</h3>
+
+<p>
+You logged in and opened your dashboard.
+</p>
+
+</div>
+
+</div>
+
+<div class="timeline-item">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-content">
+
+<h3>
+Ready To Launch
+</h3>
+
+<p>
+Submit your next website project today.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- NOTIFICATIONS -->
+
+<section class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+
+Notifications
+
+</h2>
+
+<p class="section-subtitle">
+
+Latest updates from FastGrow.
+
+</p>
+
+<div class="notification-box">
+
+<div class="notification">
+
+🚀 Welcome to FastGrow Dashboard V4
+
+</div>
+
+<div class="notification">
+
+📂 No active projects available
+
+</div>
+
+<div class="notification">
+
+💡 Click Start Project to begin
+
+</div>
+
+<div class="notification">
+
+⚡ Premium Apple Style Dashboard Enabled
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<div class="container">
+
+<h2>
+
+FastGrow
+
+</h2>
+
+<p>
+
+Premium Website Development Agency
+
+</p>
+
+</div>
+
+</footer>
+
+<style>
+
+/* ACTIONS */
+
+.action-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(260px,1fr));
+
+gap:25px;
+
+}
+
+.action-card{
+
+padding:35px;
+
+border-radius:30px;
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+backdrop-filter:blur(30px);
+
+text-decoration:none;
+
+color:var(--text);
+
+transition:.4s;
+
+cursor:pointer;
+
+}
+
+.action-card:hover{
+
+transform:translateY(-12px);
+
+box-shadow:
+0 20px 50px
+rgba(10,132,255,.25);
+
+}
+
+.action-icon{
+
+font-size:2.5rem;
+
+margin-bottom:20px;
+
+}
+
+.action-card h3{
+
+margin-bottom:12px;
+
+}
+
+.action-card p{
+
+color:var(--muted);
+
+line-height:1.8;
+
+}
+
+/* TIMELINE */
+
+.timeline{
+
+max-width:900px;
+
+margin:auto;
+
+position:relative;
+
+}
+
+.timeline::before{
+
+content:'';
+
+position:absolute;
+
+left:20px;
+
+top:0;
+
+width:2px;
+
+height:100%;
+
+background:#0A84FF;
+
+}
+
+.timeline-item{
+
+position:relative;
+
+padding-left:70px;
+
+margin-bottom:40px;
+
+}
+
+.timeline-dot{
+
+width:18px;
+
+height:18px;
+
+border-radius:50%;
+
+background:#0A84FF;
+
+position:absolute;
+
+left:12px;
+
+top:10px;
+
+box-shadow:
+0 0 20px #0A84FF;
+
+}
+
+.timeline-content{
+
+padding:25px;
+
+border-radius:25px;
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+backdrop-filter:blur(30px);
+
+}
+
+.timeline-content p{
+
+margin-top:10px;
+
+color:var(--muted);
+
+}
+
+/* NOTIFICATIONS */
+
+.notification-box{
+
+max-width:900px;
+
+margin:auto;
+
+display:flex;
+
+flex-direction:column;
+
+gap:20px;
+
+}
+
+.notification{
+
+padding:22px;
+
+border-radius:22px;
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+backdrop-filter:blur(30px);
+
+transition:.3s;
+
+}
+
+.notification:hover{
+
+transform:translateX(8px);
+
+}
+
+/* FOOTER */
+
+.footer{
+
+padding:90px 0;
+
+text-align:center;
+
+border-top:
+1px solid var(--border);
+
+}
+
+.footer h2{
+
+font-size:2rem;
+
+margin-bottom:10px;
+
+}
+
+.footer p{
+
+color:var(--muted);
+
+}
+
+</style>
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyB07ANyE0FOOmUrIMbKUE5xD6vEdriS2Jo",
+
+authDomain: "fastgrow-905b1.firebaseapp.com",
+
+projectId: "fastgrow-905b1",
+
+storageBucket: "fastgrow-905b1.firebasestorage.app",
+
+messagingSenderId: "544280124586",
+
+appId: "1:544280124586:web:a599118d32e1f9d043c4d3"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+/* USER EMAIL */
+
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+
+const emailElement =
+document.getElementById("userEmail");
+
+if(emailElement){
+
+emailElement.innerHTML =
+user.email;
+
+}
+
+const avatar =
+document.getElementById("avatar");
+
+if(avatar){
+
+const initials =
+user.email.substring(0,2)
+.toUpperCase();
+
+avatar.innerHTML =
+initials;
+
+}
+
+}else{
+
+const emailElement =
+document.getElementById("userEmail");
+
+if(emailElement){
+
+emailElement.innerHTML =
+"Guest User";
+
+}
+
+}
+
+});
+
+/* THEME TOGGLE */
+
+const themeBtn =
+document.getElementById("themeToggle");
+
+if(localStorage.getItem("theme")==="light"){
+
+document.body.classList.add("light");
+
+themeBtn.innerHTML =
+"☀️ Theme";
+
+}
+
+themeBtn.addEventListener("click",()=>{
+
+document.body.classList.toggle("light");
+
+if(document.body.classList.contains("light")){
+
+localStorage.setItem(
+"theme",
+"light"
+);
+
+themeBtn.innerHTML =
+"☀️ Theme";
+
+}else{
+
+localStorage.setItem(
+"theme",
+"dark"
+);
+
+themeBtn.innerHTML =
+"🌙 Theme";
+
+}
+
+});
+
+/* COUNTER ANIMATION */
+
+const counters =
+document.querySelectorAll(".counter");
+
+counters.forEach(counter=>{
+
+counter.innerText="0";
+
+const updateCounter=()=>{
+
+const target=
++counter.getAttribute("data-target");
+
+const current=
++counter.innerText;
+
+const increment=
+target/60;
+
+if(current<target){
+
+counter.innerText=
+`${Math.ceil(current+increment)}`;
+
+setTimeout(
+updateCounter,
+25
+);
+
+}else{
+
+counter.innerText=
+target;
+
+}
+
+};
+
+updateCounter();
+
+});
+
+/* SCROLL REVEAL */
+
+const observer =
+new IntersectionObserver(
+
+(entries)=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add(
+"show"
+);
+
+}
+
+});
+
+},
+
+{
+threshold:0.15
+}
+
+);
+
+document
+.querySelectorAll(
+".stat-card,.action-card,.timeline-item,.notification,.profile-card"
+)
+
+.forEach((el)=>{
+
+el.classList.add("hidden");
+
+observer.observe(el);
+
+});
+
+/* PAGE LOAD */
+
+window.addEventListener(
+"load",
+()=>{
+
+document.body.style.opacity="1";
+
+}
+);
+
+</script>
+
+<style>
+
+/* SCROLL ANIMATION */
+
+.hidden{
+
+opacity:0;
+
+transform:
+translateY(60px);
+
+transition:
+all .8s ease;
+
+}
+
+.show{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+}
+
+/* PAGE FADE */
+
+body{
+
+opacity:0;
+
+transition:
+opacity .6s ease;
+
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#111;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#0A84FF;
+
+border-radius:999px;
+
+}
+
+/* MOBILE RESPONSIVE */
+
+@media(max-width:768px){
+
+.hero h1{
+
+font-size:3rem;
+
+letter-spacing:-2px;
+
+}
+
+.section-title{
+
+font-size:2rem;
+
+}
+
+.hero-buttons{
+
+flex-direction:column;
+
+}
+
+.profile-actions{
+
+flex-direction:column;
+
+}
+
+.stats-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.action-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+</style>
+
+</body>
+</html>
