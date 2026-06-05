@@ -202,7 +202,38 @@ cursor:pointer;
 </head>
 
 <body>
+<script type="module">
 
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB07ANyE0FOOmUrIMbKUE5xD6vEdriS2Jo",
+  authDomain: "fastgrow-905b1.firebaseapp.com",
+  projectId: "fastgrow-905b1",
+  storageBucket: "fastgrow-905b1.firebasestorage.app",
+  messagingSenderId: "544280124586",
+  appId: "1:544280124586:web:a599118d32e1f9d043c4d3"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+
+  if (!user) {
+    window.location.href = "login.html";
+  }
+
+});
+
+</script>
 <div class="blob1"></div>
 <div class="blob2"></div>
 <div class="blob3"></div>
