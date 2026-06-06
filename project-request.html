@@ -46,6 +46,8 @@ overflow-x:hidden;
 transition:.4s;
 }
 
+/* BACKGROUND */
+
 .blob1,
 .blob2,
 .blob3{
@@ -83,95 +85,155 @@ opacity:.15;
 }
 
 .form-popup{
+
 width:100%;
 max-width:550px;
+
 padding:40px;
+
 border-radius:28px;
+
 background:var(--card);
+
 backdrop-filter:blur(30px);
+
 border:1px solid var(--border);
+
 position:relative;
+
 }
 
 h2{
+
 text-align:center;
+
 font-size:2rem;
+
 font-weight:900;
+
 margin-bottom:25px;
+
 }
 
 input,
 textarea,
 select{
+
 width:100%;
+
 padding:14px;
+
 margin:10px 0;
+
 border:none;
+
 outline:none;
+
 border-radius:14px;
+
 background:rgba(255,255,255,.05);
+
 color:var(--text);
+
 }
 
 input::placeholder,
 textarea::placeholder{
+
 color:var(--muted);
+
 }
 
 textarea{
+
 height:130px;
+
 resize:none;
+
 }
 
 .submit-btn{
+
 width:100%;
+
 padding:16px;
+
 margin-top:15px;
+
 border:none;
+
 border-radius:999px;
+
 background:#0A84FF;
+
 color:white;
+
 font-weight:700;
+
 font-size:1rem;
+
 cursor:pointer;
+
 }
 
 .theme-btn{
+
 position:absolute;
+
 top:20px;
+
 right:20px;
+
 padding:10px 16px;
+
 border:none;
+
 border-radius:999px;
+
 background:var(--card);
+
 color:var(--text);
+
 cursor:pointer;
-}
 
-.status-box{
-margin-top:15px;
-padding:12px;
-border-radius:12px;
-text-align:center;
-display:none;
-font-weight:600;
-}
-
-.success{
-background:rgba(0,255,120,.12);
-border:1px solid rgba(0,255,120,.3);
-}
-
-.error{
-background:rgba(255,0,0,.12);
-border:1px solid rgba(255,0,0,.3);
 }
 
 </style>
 </head>
 
 <body>
+<script type="module">
 
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB07ANyE0FOOmUrIMbKUE5xD6vEdriS2Jo",
+  authDomain: "fastgrow-905b1.firebaseapp.com",
+  projectId: "fastgrow-905b1",
+  storageBucket: "fastgrow-905b1.firebasestorage.app",
+  messagingSenderId: "544280124586",
+  appId: "1:544280124586:web:a599118d32e1f9d043c4d3"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+
+  if (!user) {
+    window.location.href = "login.html";
+  }
+
+});
+
+</script>
 <div class="blob1"></div>
 <div class="blob2"></div>
 <div class="blob3"></div>
@@ -182,33 +244,62 @@ border:1px solid rgba(255,0,0,.3);
 
 <div class="form-popup">
 
-<h2>Start Your Project</h2>
+<h2>
+Start Your Project
+</h2>
 
-<input type="text" id="name" placeholder="Your Name">
+<input
+type="text"
+id="name"
+placeholder="Your Name">
 
-<input type="email" id="email" placeholder="Your Email">
+<input
+type="email"
+id="email"
+placeholder="Your Email">
 
-<input type="text" id="business" placeholder="Business Name">
+<input
+type="text"
+id="business"
+placeholder="Business Name">
 
 <select id="websiteType">
 
-<option value="">Select Website Type</option>
+<option value="">
+Select Website Type
+</option>
 
-<option value="Business Website">Business Website</option>
+<option value="Business Website">
+Business Website
+</option>
 
-<option value="E-Commerce">E-Commerce</option>
+<option value="E-Commerce">
+E-Commerce
+</option>
 
-<option value="Portfolio">Portfolio</option>
+<option value="Portfolio">
+Portfolio
+</option>
 
-<option value="Landing Page">Landing Page</option>
+<option value="Landing Page">
+Landing Page
+</option>
 
-<option value="Custom Website">Custom Website</option>
+<option value="Custom Website">
+Custom Website
+</option>
 
 </select>
 
-<input type="number" id="pages" placeholder="Number of Pages">
+<input
+type="number"
+id="pages"
+placeholder="Number of Pages">
 
-<input type="number" id="budget" placeholder="Budget in ₹">
+<input
+type="number"
+id="budget"
+placeholder="Budget in ₹">
 
 <textarea
 id="description"
@@ -222,60 +313,12 @@ Submit Project
 
 </button>
 
-<div id="statusBox" class="status-box"></div>
 </div>
-<script type="module">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+<script>
 
-import {
-getAuth,
-onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-getFirestore,
-collection,
-addDoc,
-serverTimestamp
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-
-apiKey: "AIzaSyB07ANyE0FOOmUrIMbKUE5xD6vEdriS2Jo",
-
-authDomain: "fastgrow-905b1.firebaseapp.com",
-
-projectId: "fastgrow-905b1",
-
-storageBucket: "fastgrow-905b1.firebasestorage.app",
-
-messagingSenderId: "544280124586",
-
-appId: "1:544280124586:web:a599118d32e1f9d043c4d3"
-
-};
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
-
-/* AUTH PROTECTION */
-
-onAuthStateChanged(auth,(user)=>{
-
-if(!user){
-
-window.location.href="login.html";
-
-}
-
-});
+emailjs.init("9r-5S0m--YJK0PF-Q");
 
 /* THEME */
 
@@ -310,38 +353,20 @@ themeBtn.innerHTML="🌙 Theme";
 
 });
 
-window.fastgrowDB = db;
-window.fastgrowCollection = collection;
-window.fastgrowAddDoc = addDoc;
-window.fastgrowServerTimestamp = serverTimestamp;
-
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-<script>
-
-emailjs.init("9r-5S0m--YJK0PF-Q");
-
-</script>
-<script>
+/* PROJECT SUBMIT */
 
 document
 .getElementById("submitProject")
-.addEventListener("click", async ()=>{
-  alert("Submit button clicked");
-
-const statusBox =
-document.getElementById("statusBox");
+.addEventListener("click",()=>{
 
 const name =
-document.getElementById("name").value.trim();
+document.getElementById("name").value;
 
 const email =
-document.getElementById("email").value.trim();
+document.getElementById("email").value;
 
 const business =
-document.getElementById("business").value.trim();
+document.getElementById("business").value;
 
 const websiteType =
 document.getElementById("websiteType").value;
@@ -353,7 +378,7 @@ const budget =
 document.getElementById("budget").value;
 
 const description =
-document.getElementById("description").value.trim();
+document.getElementById("description").value;
 
 if(
 !name ||
@@ -365,51 +390,10 @@ if(
 !description
 ){
 
-statusBox.style.display="block";
-statusBox.className="status-box error";
-statusBox.innerHTML="❌ Please fill all fields";
-
+alert("Please fill all fields.");
 return;
 
 }
-
-try{
-
-/* SAVE TO FIRESTORE */
-
-await window.fastgrowAddDoc(
-
-window.fastgrowCollection(
-window.fastgrowDB,
-"projects"
-),
-
-{
-
-clientName: name,
-
-email: email,
-
-business: business,
-
-websiteType: websiteType,
-
-pages: Number(pages),
-
-budget: Number(budget),
-
-description: description,
-
-status: "pending",
-
-createdAt:
-window.fastgrowServerTimestamp()
-
-}
-
-);
-
-/* EMAILJS */
 
 const templateParams = {
 
@@ -431,18 +415,15 @@ approve_link:
 
 };
 
-await emailjs.send(
+emailjs.send(
 "service_02pjvfs",
 "template_w1nqhif",
 templateParams
-);
+)
 
-/* SUCCESS */
+.then(()=>{
 
-statusBox.style.display="block";
-statusBox.className="status-box success";
-statusBox.innerHTML=
-"✅ Project Submitted Successfully";
+alert("✅ Project Request Submitted Successfully!");
 
 document.getElementById("name").value="";
 document.getElementById("email").value="";
@@ -452,19 +433,19 @@ document.getElementById("pages").value="";
 document.getElementById("budget").value="";
 document.getElementById("description").value="";
 
-}catch(error){
+})
+
+.catch((error)=>{
 
 console.log(error);
 
-statusBox.style.display="block";
-statusBox.className="status-box error";
-statusBox.innerHTML=
-"❌ Submission Failed";
+alert("❌ Email Sending Failed");
 
-}
+});
 
 });
 
 </script>
+
 </body>
 </html>
