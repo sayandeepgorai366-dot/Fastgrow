@@ -54,6 +54,7 @@ Already have an account? <span class="toggle-link" id="loginLink">Login</span>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 apiKey: "AIzaSyB07ANyE0FOOmUrIMbKUE5xD6vEdriS2Jo",
@@ -65,6 +66,7 @@ appId: "1:544280124586:web:a599118d32e1f9d043c4d3"
 };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 // Theme toggle
 const themeBtn = document.getElementById("themeToggle");
@@ -78,14 +80,36 @@ const password=document.getElementById("password").value;
 const name=document.getElementById("name").value;
 if(!email||!password||!name){alert("Please fill all fields"); return;}
 createUserWithEmailAndPassword(auth,email,password)
-.then(()=>{window.location.href="dashboard.html";})
+.then(async(userCredential)=>{
+  const user = userCredential.user;
+  // Save user profile to Firestore
+  await setDoc(doc(db,"users", user.uid),{
+    name: name,
+    email: email,
+    uid: user.uid,
+    createdAt: serverTimestamp(),
+    provider: "email"
+  });
+  window.location.href="dashboard.html";
+})
 .catch(e=>alert(e.message));
 });
 
 // Google Signup
 const provider = new GoogleAuthProvider();
 document.getElementById("googleLogin").addEventListener("click",()=>{
-signInWithPopup(auth,provider).then(()=>{window.location.href="dashboard.html";}).catch(e=>alert(e.message));
+signInWithPopup(auth,provider).then(async(result)=>{
+  const user = result.user;
+  // Save profile (setDoc with merge won't overwrite if user already exists)
+  await setDoc(doc(db,"users", user.uid),{
+    name: user.displayName || "",
+    email: user.email,
+    uid: user.uid,
+    createdAt: serverTimestamp(),
+    provider: "google"
+  },{merge:true});
+  window.location.href="dashboard.html";
+}).catch(e=>alert(e.message));
 });
 
 // Link to login.html

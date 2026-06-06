@@ -1339,75 +1339,83 @@ color:var(--muted);
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-import {
-getAuth,
-onAuthStateChanged
-}
+import { getAuth, onAuthStateChanged }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import { getFirestore, collection, query, where, getDocs, doc, getDoc }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 /* FIREBASE CONFIG */
 
 const firebaseConfig = {
-
 apiKey: "AIzaSyB07ANyE0FOOmUrIMbKUE5xD6vEdriS2Jo",
-
 authDomain: "fastgrow-905b1.firebaseapp.com",
-
 projectId: "fastgrow-905b1",
-
 storageBucket: "fastgrow-905b1.firebasestorage.app",
-
 messagingSenderId: "544280124586",
-
 appId: "1:544280124586:web:a599118d32e1f9d043c4d3"
-
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
-/* USER EMAIL */
+/* USER INFO + REAL PROJECT STATS FROM FIRESTORE */
 
-onAuthStateChanged(auth,(user)=>{
+onAuthStateChanged(auth, async (user) => {
 
 if(user){
 
-const emailElement =
-document.getElementById("userEmail");
+  // Show email
+  const emailElement = document.getElementById("userEmail");
+  if(emailElement) emailElement.innerHTML = user.email;
 
-if(emailElement){
+  // Show avatar initials
+  const avatar = document.getElementById("avatar");
 
-emailElement.innerHTML =
-user.email;
+  // Load user profile from Firestore for display name
+  try {
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if(userDoc.exists()){
+      const data = userDoc.data();
+      const nameEl = document.getElementById("welcomeName");
+      if(nameEl && data.name) nameEl.innerHTML = "Welcome Back, " + data.name;
+      if(avatar) avatar.innerHTML = data.name ? data.name.substring(0,2).toUpperCase() : user.email.substring(0,2).toUpperCase();
+    } else {
+      if(avatar) avatar.innerHTML = user.email.substring(0,2).toUpperCase();
+    }
+  } catch(e) {
+    console.error("Error loading user profile:", e);
+    if(avatar) avatar.innerHTML = user.email.substring(0,2).toUpperCase();
+  }
 
-}
+  // Load REAL project stats from Firestore
+  try {
+    const projectsQuery = query(collection(db,"projects"), where("uid","==", user.uid));
+    const snapshot = await getDocs(projectsQuery);
 
-const avatar =
-document.getElementById("avatar");
+    let submitted = 0, approved = 0, completed = 0;
+    snapshot.forEach(docSnap => {
+      const p = docSnap.data();
+      submitted++;
+      if(p.status === "approved") approved++;
+      if(p.status === "completed") completed++;
+    });
 
-if(avatar){
+    // Update counters with real data
+    const counters = document.querySelectorAll(".counter");
+    const realValues = [submitted, approved, completed, 0];
+    counters.forEach((counter, i) => {
+      counter.setAttribute("data-target", realValues[i] || 0);
+    });
 
-const initials =
-user.email.substring(0,2)
-.toUpperCase();
+  } catch(e){
+    console.error("Error loading projects:", e);
+  }
 
-avatar.innerHTML =
-initials;
-
-}
-
-}else{
-
-const emailElement =
-document.getElementById("userEmail");
-
-if(emailElement){
-
-emailElement.innerHTML =
-"Guest User";
-
-}
-
+} else {
+  const emailElement = document.getElementById("userEmail");
+  if(emailElement) emailElement.innerHTML = "Guest User";
 }
 
 });
@@ -1655,4 +1663,4 @@ grid-template-columns:1fr;
 </style>
 
 </body>
-</html>
+</html

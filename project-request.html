@@ -213,6 +213,9 @@ onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import { getFirestore, collection, addDoc, serverTimestamp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyB07ANyE0FOOmUrIMbKUE5xD6vEdriS2Jo",
   authDomain: "fastgrow-905b1.firebaseapp.com",
@@ -224,11 +227,15 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
+let currentUser = null;
 
 onAuthStateChanged(auth, (user) => {
 
   if (!user) {
     window.location.href = "login.html";
+  } else {
+    currentUser = user;
   }
 
 });
@@ -421,9 +428,27 @@ emailjs.send(
 templateParams
 )
 
-.then(()=>{
+.then(async ()=>{
 
-alert("✅ Project Request Submitted Successfully!");
+  // ✅ Save project to Firestore
+  try {
+    await addDoc(collection(db, "projects"), {
+      uid: currentUser ? currentUser.uid : null,
+      clientName: name,
+      clientEmail: email,
+      businessName: business,
+      websiteType: websiteType,
+      pages: Number(pages),
+      budget: Number(budget),
+      description: description,
+      status: "pending",
+      submittedAt: serverTimestamp()
+    });
+  } catch(firestoreErr) {
+    console.error("Firestore save error:", firestoreErr);
+  }
+
+  alert("✅ Project Request Submitted Successfully!");
 
 document.getElementById("name").value="";
 document.getElementById("email").value="";
